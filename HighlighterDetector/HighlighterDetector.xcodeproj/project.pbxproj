@@ -37,6 +37,7 @@
 		592E5AB7193097D90006A837 /* libopencv_superres.3.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 592E5A9B193097D90006A837 /* libopencv_superres.3.0.0.dylib */; };
 		592E5AB8193097D90006A837 /* libopencv_video.3.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 592E5A9C193097D90006A837 /* libopencv_video.3.0.0.dylib */; };
 		592E5AB9193097D90006A837 /* libopencv_videostab.3.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 592E5A9D193097D90006A837 /* libopencv_videostab.3.0.0.dylib */; };
+		592E5ABD1930E0E40006A837 /* CornerDetector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 592E5ABB1930E0E40006A837 /* CornerDetector.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -85,6 +86,8 @@
 		592E5A9C193097D90006A837 /* libopencv_video.3.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_video.3.0.0.dylib; path = ../OpenCV/libopencv_video.3.0.0.dylib; sourceTree = "<group>"; };
 		592E5A9D193097D90006A837 /* libopencv_videostab.3.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_videostab.3.0.0.dylib; path = ../OpenCV/libopencv_videostab.3.0.0.dylib; sourceTree = "<group>"; };
 		592E5ABA193097E50006A837 /* sheet.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = sheet.JPG; path = ../SampleImages/sheet.JPG; sourceTree = "<group>"; };
+		592E5ABB1930E0E40006A837 /* CornerDetector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CornerDetector.cpp; sourceTree = "<group>"; };
+		592E5ABC1930E0E40006A837 /* CornerDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CornerDetector.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,6 +152,8 @@
 			children = (
 				592E5A77193097870006A837 /* main.cpp */,
 				592E5A79193097870006A837 /* HighlighterDetector.1 */,
+				592E5ABB1930E0E40006A837 /* CornerDetector.cpp */,
+				592E5ABC1930E0E40006A837 /* CornerDetector.h */,
 			);
 			path = HighlighterDetector;
 			sourceTree = "<group>";
@@ -247,6 +252,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				592E5ABD1930E0E40006A837 /* CornerDetector.cpp in Sources */,
 				592E5A78193097870006A837 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -375,6 +381,7 @@
 				592E5A7F193097870006A837 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
