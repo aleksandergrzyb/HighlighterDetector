@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Aleksander Grzyb. All rights reserved.
 //
 
-#include "CornerDetector.h"
+#include "AGCornerDetector.h"
 
 #include <stdio.h>
 #include <math.h>
@@ -17,6 +17,15 @@
 #include <opencv2/nonfree/nonfree.hpp>
 #include <opencv2/nonfree/features2d.hpp>
 #include <opencv2/highgui/highgui.hpp>
+
+using namespace cv;
+using namespace std;
+
+#define BIGGEST_AREA 6000.0f
+#define A_COEFFICIENT 0
+#define B_COEFFICIENT 1
+#define LEFT_SIDE 0
+#define RIGHT_SIDE 1
 
 double AGCornerDetector::angle(Point point1, Point point2, Point point3)
 {
