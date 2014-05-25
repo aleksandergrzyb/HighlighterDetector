@@ -20,7 +20,7 @@
 class AGCornerDetector {
     void calculateLineEquationFromPoints(std::vector<cv::Point>& pointVector, std::vector<double>& lineCoefficientVector);
     double angle(cv::Point point1, cv::Point point2, cv::Point point3);
-    cv::Point calculatePointAfterCrop(std::vector<double> lineCoefficientVector, cv::Point pointToMove, bool side, int distance);
+    cv::Point calculatePointAfterCrop(std::vector<double>& lineCoefficientVector, cv::Point pointToMove, bool side, int distance);
     void sortCorners(std::vector<cv::Point>& corners);
 public:
     void findCornersInImage(cv::Mat& image, std::vector<cv::Point>& corners);

@@ -14,7 +14,8 @@
 
 class AGDrawing {    
 public:
-    void static drawCornersInImage(cv::Mat& image, std::vector<cv::Point> imageCorners);
+    void static drawCornersInImage(cv::Mat& image, std::vector<cv::Point>& imageCorners);
+    void static drawSquaresInImage(cv::Mat& image, std::vector<std::vector<cv::Point>>& squares);
 };
 
 #endif /* defined(__HighlighterDetector__AGDrawing__) */

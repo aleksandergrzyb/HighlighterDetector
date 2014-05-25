@@ -14,7 +14,8 @@
 
 class AGColorDetector {
 public:
-    void detectGreenColorInImage(cv::Mat& image);
+    void detectGreenColorInImage(cv::Mat& image, cv::Mat& outputImage);
+    void findGreenColorAreaInImage(cv::Mat& image, cv::Mat& outputImage, std::vector<cv::Point>& greenArea);
 };
 
 #endif /* defined(__HighlighterDetector__AGColorDetector__) */

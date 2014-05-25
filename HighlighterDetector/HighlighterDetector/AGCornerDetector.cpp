@@ -39,7 +39,7 @@ double AGCornerDetector::angle(Point point1, Point point2, Point point3)
 void AGCornerDetector::findSquaresInImage(cv::Mat &image, vector<vector<Point> > &squares)
 {
     // blur will enhance edge detection
-    Mat blurred(image);
+    Mat blurred;
     medianBlur(image, blurred, 9);
     
     Mat gray0(blurred.size(), CV_8U), gray;
@@ -93,7 +93,7 @@ void AGCornerDetector::findSquaresInImage(cv::Mat &image, vector<vector<Point> >
     }
 }
 
-Point AGCornerDetector::calculatePointAfterCrop(vector<double> lineCoefficientVector, Point pointToMove, bool side, int distance)
+Point AGCornerDetector::calculatePointAfterCrop(vector<double>& lineCoefficientVector, Point pointToMove, bool side, int distance)
 {
     Point newPoint;
     double aCoefficient = lineCoefficientVector[A_COEFFICIENT], bCoefficient = lineCoefficientVector[B_COEFFICIENT], a = 0.0, b = 0.0, c = 0.0;
@@ -140,20 +140,20 @@ void AGCornerDetector::calculateLineEquationFromPoints(vector<cv::Point> &pointV
 void AGCornerDetector::findCornersInImage(Mat& image, vector<Point>& imageCorners)
 {
     // Resizing image to 10 % of original image and saving size in insance veriables.
-    Mat resizedImage;
+    Mat resizedImage, grayImage;
     resize(image, resizedImage, Size(0,0), 0.1, 0.1);
     double widthRatio = image.size().width / resizedImage.size().width;
     double heightRatio = image.size().height / resizedImage.size().height;
     
     // Convering to 8 bit color space
-    cvtColor(resizedImage, resizedImage, CV_BGR2GRAY);
+    cvtColor(resizedImage, grayImage, CV_BGR2GRAY);
     
     // Removing noise from image.
-    GaussianBlur(resizedImage, resizedImage, Size(7, 7), 2.0, 2.0);
+    GaussianBlur(grayImage, grayImage, Size(7, 7), 2.0, 2.0);
     
     // Performing Canny edge detection with treshold of 50 (experimental).
     float tresh = 50.0f;
-    Canny(resizedImage, resizedImage, tresh, 2 * tresh, 3);
+    Canny(grayImage, grayImage, tresh, 2 * tresh, 3);
     
     // Creating data structures.
     vector<vector<Point>> contours, hull(contours.size()), contoursTwo;
@@ -162,7 +162,7 @@ void AGCornerDetector::findCornersInImage(Mat& image, vector<Point>& imageCorner
     bool cornersOutside = false;
     
     // Finding contours of image after Canny edge detection.
-    findContours(resizedImage, contours, hierarchy, CV_RETR_CCOMP, CV_CHAIN_APPROX_NONE, Point(0, 0));
+    findContours(grayImage, contours, hierarchy, CV_RETR_CCOMP, CV_CHAIN_APPROX_NONE, Point(0, 0));
     
     // Checking if any contours were found.
     if (!contours.empty()) {
@@ -175,7 +175,7 @@ void AGCornerDetector::findCornersInImage(Mat& image, vector<Point>& imageCorner
         }
         
         // Here we are drawing contours on new image, because during experimenting I found that performing again the same procedure results with better receipt shape recognition.
-        Mat drawing = Mat::zeros(resizedImage.size(), CV_8UC3);
+        Mat drawing = Mat::zeros(grayImage.size(), CV_8UC3);
         for(int i = 0; i < contours.size(); i++) {
             drawContours(drawing, contours, i, Scalar(255, 255, 0), 1, 8, hierarchy, 0, Point());
         }
@@ -301,14 +301,14 @@ void AGCornerDetector::findCornersInImage(Mat& image, vector<Point>& imageCorner
             }
             if (leftSide > rightSide) {
                 topRightPoint.x = 0;
-                topRightPoint.y = resizedImage.size().height;
-                bottomRightPoint.x = resizedImage.size().width;
-                bottomRightPoint.y = resizedImage.size().height;
+                topRightPoint.y = grayImage.size().height;
+                bottomRightPoint.x = grayImage.size().width;
+                bottomRightPoint.y = grayImage.size().height;
             }
             else {
                 topRightPoint.x = 0;
                 topRightPoint.y = 0;
-                bottomRightPoint.x = resizedImage.size().width;
+                bottomRightPoint.x = grayImage.size().width;
                 bottomRightPoint.y = 0;
             }
             if (topRightPoint.y > topLeftPoint.y) {
@@ -355,12 +355,12 @@ void AGCornerDetector::findCornersInImage(Mat& image, vector<Point>& imageCorner
             // Case where all corners are outside of screen.
             if (contourArea(biggestContour, false) < BIGGEST_AREA) {
                 topLeftPoint.x = 0;
-                topLeftPoint.y = resizedImage.size().height;
+                topLeftPoint.y = grayImage.size().height;
                 topRightPoint.x = 0;
                 topRightPoint.y = 0;
-                bottomLeftPoint.x = resizedImage.size().width;
-                bottomLeftPoint.y = resizedImage.size().height;
-                bottomRightPoint.x = resizedImage.size().width;
+                bottomLeftPoint.x = grayImage.size().width;
+                bottomLeftPoint.y = grayImage.size().height;
+                bottomRightPoint.x = grayImage.size().width;
                 bottomRightPoint.y = 0;
                 cornersOutside = true;
             }
@@ -424,12 +424,12 @@ void AGCornerDetector::findCornersInImage(Mat& image, vector<Point>& imageCorner
     }
     else {
         topLeftPoint.x = 0;
-        topLeftPoint.y = resizedImage.size().height;
+        topLeftPoint.y = grayImage.size().height;
         topRightPoint.x = 0;
         topRightPoint.y = 0;
-        bottomLeftPoint.x = resizedImage.size().width;
-        bottomLeftPoint.y = resizedImage.size().height;
-        bottomRightPoint.x = resizedImage.size().width;
+        bottomLeftPoint.x = grayImage.size().width;
+        bottomLeftPoint.y = grayImage.size().height;
+        bottomRightPoint.x = grayImage.size().width;
         bottomRightPoint.y = 0;
     }
     

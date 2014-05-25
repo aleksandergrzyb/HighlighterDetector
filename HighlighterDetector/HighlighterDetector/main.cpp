@@ -44,11 +44,16 @@ int main(int argc, const char * argv[])
     
     // Detecting green color on sheet of paper
     AGColorDetector colorDetector;
-    colorDetector.detectGreenColorInImage(croppedImage);
+    Mat hsvImage;
+    
+    vector<Point> greenArea;
+    colorDetector.detectGreenColorInImage(croppedImage, hsvImage);
+    colorDetector.findGreenColorAreaInImage(hsvImage, hsvImage, greenArea);
+    
     
     // Showing picture
-    resize(croppedImage, croppedImage, Size(croppedImage.size().width * 0.2, croppedImage.size().height * 0.2));
-    showImage(croppedImage);
+    resize(hsvImage, hsvImage, Size(hsvImage.size().width * 0.2, hsvImage.size().height * 0.2));
+    showImage(hsvImage);
     return 0;
 }
 
