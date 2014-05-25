@@ -45,15 +45,23 @@ int main(int argc, const char * argv[])
     // Detecting green color on sheet of paper
     AGColorDetector colorDetector;
     Mat hsvImage;
-    
-    vector<Point> greenArea;
+    vector<Point> greenArea, greenAreaCorners;
     colorDetector.detectGreenColorInImage(croppedImage, hsvImage);
     colorDetector.findGreenColorAreaInImage(hsvImage, hsvImage, greenArea);
+    colorDetector.findCornersOfGreenColorContour(greenArea, greenAreaCorners, 10);
     
+    // Adding offset caused by cropping image earlier
+    for (int i = 0; i < greenAreaCorners.size(); i++) {
+        greenAreaCorners[i].x += corners[TOP_LEFT_POINT].x;
+        greenAreaCorners[i].y += corners[TOP_LEFT_POINT].y;
+    }
+    
+    // Drawing corners of green highlighter
+    AGDrawing::drawCornersInImage(sheetImage, greenAreaCorners);
     
     // Showing picture
-    resize(hsvImage, hsvImage, Size(hsvImage.size().width * 0.2, hsvImage.size().height * 0.2));
-    showImage(hsvImage);
+    resize(sheetImage, sheetImage, Size(sheetImage.size().width * 0.2, sheetImage.size().height * 0.2));
+    showImage(sheetImage);
     return 0;
 }
 
